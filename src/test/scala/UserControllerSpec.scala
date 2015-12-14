@@ -1,13 +1,5 @@
 import ws.guice.controller.UserController
-import ws.guice.dao.{Identity, Persist, User}
-
-class InMemoryCollection[C <: Identity](name: String) extends Persist[C] {
-  private var coll = Map.empty[String, C]
-
-  def insert(t: C): Unit = coll += (t.id -> t)
-
-  def find(id: String): Option[C] = coll.get(id)
-}
+import ws.guice.dao.User
 
 object UserControllerSpec extends App {
   val inMemoryCollection = new InMemoryCollection[User]("users")
