@@ -1,10 +1,10 @@
+import com.google.inject.Guice
+import ws.guice.AppModules
 import ws.guice.controller.UserController
-import ws.guice.dao.{User, UserDao}
 
 object UserControllerSpec extends App {
-  val inMemoryCollection = new InMemoryCollection[User]("users")
-  val userDao = new UserDao(inMemoryCollection)
-  val userController = new UserController(userDao)
+  val injector = Guice.createInjector(new AppModules)
+  val userController = injector.getInstance(classOf[UserController])
 
   def should_return_success_when_new_user_registers: Unit = {
     val result = userController.register("focusj.x@gmail.com", "kang", "wang")
