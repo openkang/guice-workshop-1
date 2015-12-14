@@ -1,63 +1,14 @@
-## LearningAkka
-Some code sprint when learning Akka
+###original版本不爽
+我现在有一个顾虑：在测试的代码中，我仍然调用的是远程的Mongodb，这导致我在跑单元测试的时候变得很慢。解决这个问题有两个办法：
+1. 在自己本地搭建一个mongodb，这样可以减少网络的耗时。但是这个方案有一定的缺陷，我要在本地安装Mongodb，并且以后部署到集成
+环境时也要部署一套Mongodb。
 
-### Some Examples
+2. 把mongodb mock掉。我用一个内存的数据库，或者一个Map来替代mongodb。（我会选择这个方案）
 
-#### Example 1: Library.
-This example desceibes how to use Akka persistence, and shows how Akka work with Event-Souring and DDD.
+###可以顺利迁移吗？
+那么，问题来了：要替换一个存储介质，我现在的代码实现不兼容怎么办呢？在找实现方案之前，先来看一下都有那些地方不支持我们替换一种
+存储介质。
+1. UserDao的实现和MongoDB紧紧绑定在一起。
 
-##### How to use
-*create a new library:
-
-    {
-        "name": "Computer",
-        "books": [
-            {
-                "isbn": "9787121241536",
-                "title": "大数据日知录",
-                "author": "张俊林",
-                "publishTime": "2014-09-01"
-            },{
-                "isbn": "9787115331809",
-                "title": "信息简史",
-                "author": "詹姆斯·格雷克 ",
-                "publishTime": "2012-10-01"
-            },{
-                "isbn": "9787115244901",
-                "title": "代码整洁之道",
-                "author": "马丁 ",
-                "publishTime": "2011-01-01"
-            }
-        ]
-    }
-
-*add some new books:
-
-    {
-        "name": "Computer",
-        "books": [
-            {
-                "isbn": "9787111135104",
-                "title": "计算机程序的构造和解释",
-                "author": "Harold Abelson",
-                "publishTime": "2004-02-01"
-            }
-        ]
-    }
-
-*borrow a book from library:
-
-    {
-        "name": "Computer",
-        "isbn": "9787111135104",
-        "title": "计算机程序的构造和解释",
-        "by": "focusj"
-    }
-
-*return the book to library:
-
-    {
-        "name": "Computer",
-        "isbn": "9787111135104",
-        "by": "focusj"
-    }
+####解决方案：
+1. 把UserDao的实现和MongoDB的存储实现解耦合。

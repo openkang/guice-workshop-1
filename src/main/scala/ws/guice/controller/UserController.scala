@@ -1,9 +1,10 @@
 package ws.guice.controller
 
-import ws.guice.dao.{User, UserDao}
+import ws.guice.dao.{MongoCollection, User, UserDao}
 
 class UserController {
-  private val userDao = new UserDao
+  val mongoCollection = new MongoCollection[User]("users")
+  private val userDao = new UserDao(mongoCollection)
 
   def register(email: String, firstName: String, lastName: String) = {
     userDao.find(email) match {

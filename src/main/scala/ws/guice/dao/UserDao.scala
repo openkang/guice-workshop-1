@@ -21,9 +21,7 @@ class MongoCollection[T <: Identity](name: String) {
 
 }
 
-class UserDao {
-  private val collection = new MongoCollection[User]("users")
-
+class UserDao(collection: MongoCollection[User]) {
   def save(user: User): Unit = collection.insert(user)
 
   def find(id: String): Option[User] = collection.find(id)
