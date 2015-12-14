@@ -1,10 +1,8 @@
 package ws.guice.controller
 
-import ws.guice.dao.{Persist, User, UserDao}
+import ws.guice.dao.{User, UserDao}
 
-class UserController(persist: Persist[User]) {
-  private val userDao = new UserDao(persist)
-
+class UserController(userDao: UserDao) {
   def register(email: String, firstName: String, lastName: String) = {
     userDao.find(email) match {
       case None =>

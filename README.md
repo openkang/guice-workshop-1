@@ -17,3 +17,9 @@
 3. 给UserContr开刀，让其支持其它DB实现的传入。
 4. 切换数据库实现:InMemoryCollection。
 5. 体验这时测试的速度！！嗖。。。
+
+
+###original-V3版本不爽
+虽然V3版本实现了我快速跑测试的需求，但是这次UserController不爽了：我不想和Persist打交道，它比我低了两个级别，有失我的身份。
+为了照顾所有人的心情，只能再想辙了。
+1. 把UserDao的实现提出来，传实例给UserController。
