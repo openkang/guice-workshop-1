@@ -1,12 +1,12 @@
 package ws.guice
 
+import com.google.inject.Guice
 import ws.guice.controller.UserController
-import ws.guice.dao.{MongoCollection, User, UserDao}
 
-class Main {
-  val mongoCollection = new MongoCollection[User]("users")
-  val userDao = new UserDao(mongoCollection)
-  val userController = new UserController(userDao)
+object Main extends App {
+  val injector = Guice.createInjector(new AppModules)
+
+  val userController = injector.getInstance(classOf[UserController])
 
   userController.register("focusj.x@gmail.com", "kang", "wang")
 }

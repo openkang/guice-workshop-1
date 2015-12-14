@@ -1,8 +1,11 @@
 package ws.guice.controller
 
+import com.google.inject.Inject
 import ws.guice.dao.{User, UserDao}
 
-class UserController(userDao: UserDao) {
+class UserController @Inject()(
+  userDao: UserDao
+) {
   def register(email: String, firstName: String, lastName: String) = {
     userDao.find(email) match {
       case None =>
