@@ -1,10 +1,9 @@
 package ws.guice.controller
 
-import ws.guice.dao.{MongoCollection, User, UserDao}
+import ws.guice.dao.{Persist, User, UserDao}
 
-class UserController {
-  val mongoCollection = new MongoCollection[User]("users")
-  private val userDao = new UserDao(mongoCollection)
+class UserController(persist: Persist[User]) {
+  private val userDao = new UserDao(persist)
 
   def register(email: String, firstName: String, lastName: String) = {
     userDao.find(email) match {
